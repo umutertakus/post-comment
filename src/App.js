@@ -1,37 +1,18 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route} from "react-router-dom";
+import PostList from "./components/PostList";
+import PostDetail from "./components/PostDetail";
 
 function App() {
-
-  const [postList, setPostList] = useState([]);
-
-  useEffect(() => {
-    axios.get("https://react-yazi-yorum.herokuapp.com/posts")
-      .then(response => {
-        setPostList(response.data);
-      })
-  }, [])
-
   return (
+    <Router>
     <div className="main_wrapper">
-      <header>
-
-      </header>
+      <header></header>
       <div className="ui raised very padded text container segment">
-        <div className="ui relaxed divided list">
-          {postList.map(post => {
-            return (<div key={post.id} className="item">
-              <i className="large github middle aligned icon"></i>
-              <div className="content">
-                <a className="header"> {post.title} </a>
-                <div className="description"> {post.created_at} </div>
-              </div>
-            </div>)
-          })}
-
-        </div>
+        <Route path="/" exact component = {PostList} />
+        <Route path="/posts/:id" component = {PostDetail} />
       </div>
     </div>
+    </Router>
   );
 }
 
