@@ -1,4 +1,4 @@
-import axios from "axios";
+import { api } from "../api";
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const PostForm = (props) => {
     const onFormSubmit = (event) => {
         event.preventDefault();
         setErrorMessage("");
-        axios.post("https://react-yazi-yorum.herokuapp.com/posts", post)
+        api().post("/posts", post)
             .then((response) => {
                 props.history.push("/");
             })

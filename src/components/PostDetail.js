@@ -1,3 +1,4 @@
+import { api } from "../api";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PostComments from "./PostComments";
@@ -9,7 +10,7 @@ const PostDetail = (props) => {
 
     const handleCommentSubmit = (event, comment) => {
         event.preventDefault();
-        axios.post(`https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`, comment)
+        api().post(`/posts/${id}/comments`, comment)
             .then((response) => {
                 setComments([...comments, response.data]);
             }).catch(error => {
@@ -19,8 +20,8 @@ const PostDetail = (props) => {
 
     useEffect(() => {
         axios.all([
-            axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}`),
-            axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`),
+            api().get(`/posts/${id}`),
+            api().get(`/posts/${id}/comments`),
         ])
         .then((responses) => {
             setPostDetail(responses[0].data);
