@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PostComments from "./PostComments";
 import { Link } from "react-router-dom";
+import DeleteModal from "./DeleteModal";
 
 const PostDetail = (props) => {
     const { id } = props.match.params;
@@ -38,7 +39,7 @@ const PostDetail = (props) => {
             <p> {postDetail.content} </p>
             <div className="ui buttons">
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
-                <button className="ui red button">Sil</button>
+                <DeleteModal />
             </div>
             <p> {postDetail.created_at} </p>
             <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
