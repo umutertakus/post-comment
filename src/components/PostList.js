@@ -23,7 +23,8 @@ const PostList = (props) => {
                         <div className="description"> {post.created_at} </div>
                     </div>
                 </div>)
-            })} {""}
+            })} {""} <br />
+            <Link to={`/addpost`}><button className="ui primary button">Post Ekle</button></Link>
         </div>
     );
 }

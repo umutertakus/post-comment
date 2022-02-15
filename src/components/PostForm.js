@@ -15,7 +15,7 @@ const PostForm = (props) => {
         event.preventDefault();
         setErrorMessage("");
 
-        if (props.post.title) {
+        if (props.post?.title) {
             api()
                 .put(`/posts/${props.match.params.id}`, post)
                 .then((response) => {
