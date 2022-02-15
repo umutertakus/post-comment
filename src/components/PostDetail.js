@@ -39,7 +39,7 @@ const PostDetail = (props) => {
             <p> {postDetail.content} </p>
             <div className="ui buttons">
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
-                <DeleteModal />
+                <DeleteModal post={postDetail} push={props.history.push} />
             </div>
             <p> {postDetail.created_at} </p>
             <PostComments comments={comments} handleSubmit={handleCommentSubmit} />

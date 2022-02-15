@@ -9,7 +9,7 @@ const PostForm = (props) => {
 
     console.log(props);
 
-    const onInputChange = event => setPost({ ...post, [event.target.name]: event.target.value });
+    const onInputChange = (event) => setPost({ ...post, [event.target.name]: event.target.value });
 
     const onFormSubmit = (event) => {
         event.preventDefault();
@@ -29,7 +29,7 @@ const PostForm = (props) => {
                 .then((response) => {
                     props.history.push("/");
                 })
-                .catch(error => {
+                .catch((error) => {
                     setErrorMessage("Başlık ve yazı içeriği zorunludur.")
                 });
         }
