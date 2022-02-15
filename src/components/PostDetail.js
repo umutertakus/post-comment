@@ -2,11 +2,12 @@ import { api } from "../api";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PostComments from "./PostComments";
-import { Link } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 
-const PostDetail = (props) => {
-    const { id } = props.match.params;
+const PostDetail = () => {
+    const { id } = useParams();
+    const history = useHistory();
     const [postDetail, setPostDetail] = useState({});
     const [comments, setComments] = useState([]);
 
@@ -39,7 +40,7 @@ const PostDetail = (props) => {
             <p> {postDetail.content} </p>
             <div className="ui buttons">
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
-                <DeleteModal post={postDetail} push={props.history.push} />
+                <DeleteModal post={postDetail} push={history.push} />
             </div>
             <p> {postDetail.created_at} </p>
             <PostComments comments={comments} handleSubmit={handleCommentSubmit} />

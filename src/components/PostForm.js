@@ -1,11 +1,14 @@
 import { api } from "../api";
 import React, { useEffect, useState } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, useParams, useHistory } from "react-router-dom";
 
 const PostForm = (props) => {
 
     const [post, setPost] = useState({ title: "", content: "" });
     const [errorMessage, setErrorMessage] = useState("");
+
+    const { id } = useParams();
+    const history = useHistory();
 
     console.log(props);
 
@@ -17,9 +20,9 @@ const PostForm = (props) => {
 
         if (props.post?.title) {
             api()
-                .put(`/posts/${props.match.params.id}`, post)
+                .put(`/posts/${id}`, post)
                 .then((response) => {
-                    props.history.push(`/posts/${props.match.params.id}`);
+                    history.push(`/posts/${id}`);
                 })
                 .catch(error => {
                     setErrorMessage("Başlık ve yazı içeriği zorunludur.")
@@ -27,7 +30,7 @@ const PostForm = (props) => {
         } else {
             api().post("/posts", post)
                 .then((response) => {
-                    props.history.push("/");
+                    history.push("/");
                 })
                 .catch((error) => {
                     setErrorMessage("Başlık ve yazı içeriği zorunludur.")
