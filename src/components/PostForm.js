@@ -1,6 +1,6 @@
 import { api } from "../api";
 import React, { useEffect, useState } from "react";
-import { withRouter, useParams, useHistory } from "react-router-dom";
+import { Link, withRouter, useParams, useHistory } from "react-router-dom";
 
 const PostForm = (props) => {
 
@@ -63,9 +63,9 @@ const PostForm = (props) => {
                     className="ui primary button">
                     Gönder
                 </button>
-                <button className="ui button">
+                <Link to={`/`}><button className="ui button">
                     İptal Et
-                </button>
+                </button></Link>
             </div>
         </React.Fragment>)
 };

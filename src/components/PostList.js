@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../api";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
+import 'moment/locale/tr'
 
 const PostList = (props) => {
 
@@ -20,7 +22,7 @@ const PostList = (props) => {
                     <i className="large github middle aligned icon"></i>
                     <div className="content">
                         <Link to={`/posts/${post.id}`} className="header"> {post.title} </Link>
-                        <div className="description"> {post.created_at} </div>
+                        <div className="description"> <Moment format="LL" locale="tr" >{post.created_at}</Moment>  </div>
                     </div>
                 </div>)
             })} {""} <br />

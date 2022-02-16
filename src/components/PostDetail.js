@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import PostComments from "./PostComments";
 import { Link, useParams, useHistory } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
+import Moment from "react-moment";
+import 'moment/locale/tr'
 
 const PostDetail = () => {
     const { id } = useParams();
@@ -42,7 +44,7 @@ const PostDetail = () => {
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
                 <DeleteModal post={postDetail} push={history.push} />
             </div>
-            <p> {postDetail.created_at} </p>
+            <p> <Moment format="LL" >{postDetail.created_at}</Moment>  </p>
             <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
         </React.Fragment>
     );

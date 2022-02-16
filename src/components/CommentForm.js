@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const comment_default = {
     display_name: "",
@@ -34,6 +35,7 @@ const CommentForm = (props) => {
                     onChange={handleOnChange}
                     placeholder="Yorumunuz" rows="3"></textarea>
                 <button type="submit" className="ui blue button">Gönder</button>
+                <Link to={`/`} > <button className="ui button" >İptal Et</button> </Link>
             </form>
         </React.Fragment>
     )
