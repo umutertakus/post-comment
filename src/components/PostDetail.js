@@ -44,7 +44,7 @@ const PostDetail = () => {
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
                 <DeleteModal post={postDetail} push={history.push} />
             </div>
-            <p> <Moment format="LL" >{postDetail.created_at}</Moment>  </p>
+            <p> <Moment format="lll" >{postDetail.created_at}</Moment>  </p>
             <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
         </React.Fragment>
     );
