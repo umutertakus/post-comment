@@ -1,12 +1,14 @@
 import { api } from "../api";
 import React, { useEffect, useState } from "react";
 import { Link, withRouter, useParams, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { editPost } from "../actions";
 
 const PostForm = (props) => {
 
     const [post, setPost] = useState({ title: "", content: "" });
     const [errorMessage, setErrorMessage] = useState("");
-
+    const dispatch = useDispatch();
     const { id } = useParams();
     const history = useHistory();
 
@@ -19,14 +21,7 @@ const PostForm = (props) => {
         setErrorMessage("");
 
         if (props.post?.title) {
-            api()
-                .put(`/posts/${id}`, post)
-                .then((response) => {
-                    history.push(`/posts/${id}`);
-                })
-                .catch(error => {
-                    setErrorMessage("Başlık ve yazı içeriği zorunludur.")
-                })
+            dispatch(editPost(id, post, history.push));
         } else {
             api().post("/posts", post)
                 .then((response) => {
@@ -39,7 +34,7 @@ const PostForm = (props) => {
     }
 
     useEffect(() => {
-        if (props.post?.title && props.post?.content) setPost(props.post)
+        if (props.post?.title && props.post?.content) setPost({ title: props.post.title, content: props.post.content })
     }, [props.post]);
 
     return (

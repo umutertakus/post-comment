@@ -1,24 +1,19 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Button, Modal } from "semantic-ui-react";
-import { api } from "../api"
+import { deletePost } from "../actions";
 
-const DeleteModal = ({ post, push }) => {
+const DeleteModal = ({ post }) => {
     const [open, setOpen] = useState(false);
-    const [errorMessage, setErrorMesage] = useState("");
+    const errorMessage = useSelector(state => state.deletePostError)
     const show = () => setOpen(true);
     const close = () => setOpen(false);
+    const { push } = useHistory();
+    const dispatch = useDispatch();
 
     const handleDelete = (id) => {
-        api()
-            .delete(`/posts/${id}`)
-            .then(() => {
-                setErrorMesage("");
-                close();
-                push(`/`);
-            })
-            .catch(() => {
-                setErrorMesage("Yazıyı silerken bir hata oluştu.");
-            })
+        dispatch(deletePost(id, close, push));
     }
 
     return <React.Fragment>

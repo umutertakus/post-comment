@@ -1,39 +1,25 @@
-import { api } from "../api";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PostComments from "./PostComments";
 import { Link, useParams, useHistory } from "react-router-dom";
 import DeleteModal from "./DeleteModal";
 import Moment from "react-moment";
 import 'moment/locale/tr'
+import { addComment, callPost } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const PostDetail = () => {
     const { id } = useParams();
     const history = useHistory();
-    const [postDetail, setPostDetail] = useState({});
-    const [comments, setComments] = useState([]);
+    const postDetail = useSelector(state => state.postDetail);
+    const dispatch = useDispatch();
 
     const handleCommentSubmit = (event, comment) => {
         event.preventDefault();
-        api().post(`/posts/${id}/comments`, comment)
-            .then((response) => {
-                setComments([...comments, response.data]);
-            }).catch(error => {
-                console.log(error);
-            })
+        dispatch(addComment(id, comment));
     };
 
     useEffect(() => {
-        axios.all([
-            api().get(`/posts/${id}`),
-            api().get(`/posts/${id}/comments`),
-        ])
-            .then((responses) => {
-                setPostDetail(responses[0].data);
-                setComments(responses[1].data);
-            }).catch((error) => {
-                console.log(error);
-            });
+        dispatch(callPost(id))
     }, [])
 
     return (
@@ -42,10 +28,10 @@ const PostDetail = () => {
             <p> {postDetail.content} </p>
             <div className="ui buttons">
                 <Link className="ui blue button" to={`/posts/${postDetail.id}/edit`}>Düzenle</Link>
-                <DeleteModal post={postDetail} push={history.push} />
+                <DeleteModal post={postDetail} />
             </div>
             <p> <Moment format="lll" >{postDetail.created_at}</Moment>  </p>
-            <PostComments comments={comments} handleSubmit={handleCommentSubmit} />
+            <PostComments comments={postDetail.comments} handleSubmit={handleCommentSubmit} />
         </React.Fragment>
     );
 };

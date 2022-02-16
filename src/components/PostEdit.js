@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../api";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import PostForm from "./PostForm";
 
 const PostEdit = (props) => {
-    const [post, setPost] = useState({});
-    const { id } = props.match.params;
+    const { id } = useParams;
 
-    useEffect(() => {
-        api()
-        .get(`/posts/${id}`)
-        .then((response) => {
-            setPost({ title: response.data.title, content: response.data.content });
-        });
-    }, []);
+    const post = useSelector((state) => state.postDetail);
 
     return <div>
         <h1>Yazı Düzenleme Formu</h1>
